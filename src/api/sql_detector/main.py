@@ -60,7 +60,7 @@ class SQLInjectionDetecor:
 
         return results
 
-    def detect_from_json_payload(self, json: typing.Union[dict, None]):
+    def detect_from_json_payload(self, json: typing.Union[dict, typing.Dict[str, str], str, None]):
         for field in json:
             keywords = self.split_string(json[field])
 
