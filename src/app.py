@@ -24,7 +24,7 @@ class QueryBody(BaseModel):
 
 
 
-injection_detector = SQLInjectionDetecor("xgb")
+injection_detector = SQLInjectionDetecor("random")
 
 
 

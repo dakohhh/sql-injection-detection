@@ -114,3 +114,29 @@ VECTOR_MAAPPINGS = {
     "`": "r110",
     "all_tab_columns": "r111",
 }
+
+
+
+
+
+
+
+if __name__ == '__main__':
+
+    # malicious_string = "-1++select+1,2,3,4,5,6,7,8,9, unionversion()"
+    malicious_string = "-1++select+1,2,3,4,5,6,7,8,9, unionversion() SELECT"
+
+    mask = []
+
+
+    for key, value in VECTOR_MAAPPINGS.items():
+
+
+        if key.lower() in malicious_string.lower():
+
+            print(key)
+
+            mask.append(value)
+
+    print(mask)
+        

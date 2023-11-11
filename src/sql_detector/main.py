@@ -71,10 +71,8 @@ class SQLInjectionDetecor:
 
         return str(query).split()
 
-    def get_binary_array(self, keywords: typing.List[str]):
+    def get_binary_array(self, mapped_vectors: typing.List[str]):
         # Map each word to its corresponding vector (or to None if not found)
-
-        mapped_vectors = [self.vector_mappings.get(word, None) for word in keywords]
 
         binary_array = [
             1 if self.vector_mappings.get(vector, None) in mapped_vectors else 0
@@ -83,10 +81,9 @@ class SQLInjectionDetecor:
 
         return binary_array
 
-    def tokenize(self, value) -> typing.Union[typing.List, None]:
-        keywords = self.split_string(value)
+    def tokenize(self, mask:typing.List[str]) -> typing.Union[typing.List, None]:
 
-        binary_mask = self.get_binary_array(keywords)
+        binary_mask = self.get_binary_array(mask)
 
         return binary_mask
 
@@ -108,16 +105,33 @@ class SQLInjectionDetecor:
             raise Exception("Did not find query params in url")
 
         return result
+    
+
+    def map_mask(self, string_value:str):
+        mask = []
+
+        for k, v in self.vector_mappings.items():
+
+            if k.lower() in string_value.lower():
+
+                mask.append(v)
+
+        return mask
 
     def detect(self, _dict: typing.Dict[str, str]):
         results = []
 
-        for field, value in _dict.items():
-            binary_mask = self.tokenize(value)
+
+        for field, string_value in _dict.items():
+            
+            mask = self.map_mask(string_value)
+
+            binary_mask = self.tokenize(mask)
+
 
             if np.sum(binary_mask) == 0:
                 results.append(
-                    {"injection_detected": False, "field": field, "value": value}
+                    {"injection_detected": False, "field": field, "value": string_value}
                 )
 
             else:
@@ -125,12 +139,12 @@ class SQLInjectionDetecor:
 
                 if prediction[0] == 1:
                     results.append(
-                        {"injection_detected": True, "field": field, "value": value}
+                        {"injection_detected": True, "field": field, "value": string_value}
                     )
 
                 elif prediction[0] == 0:
                     results.append(
-                        {"injection_detected": False, "field": field, "value": value}
+                        {"injection_detected": False, "field": field, "value": string_value}
                     )
 
         return results
