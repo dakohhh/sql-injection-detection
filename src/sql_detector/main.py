@@ -36,14 +36,15 @@ class SQLInjectionDetecor:
     def detect_from_query_params(
         self, query_dict: typing.Dict[str, str] = None, url: str = None
     ):
-        if not query_dict and not url:
+        if not query_dict and not (url and url.strip()):
             raise exceptions.QueryParamsException(
                 "no query dictionary or url string found"
             )
 
-        if url:
+        if url and query_dict:
             query_dict_url = self.parse_url(url)
-            results = self.detect(query_dict_url)
+
+            results = self.detect(query_dict_url) + self.detect(query_dict)
             return results
 
         else:
@@ -116,7 +117,7 @@ class SQLInjectionDetecor:
 
             if np.sum(binary_mask) == 0:
                 results.append(
-                    {"injection_dected": False, "field": field, "value": value}
+                    {"injection_detected": False, "field": field, "value": value}
                 )
 
             else:
@@ -124,12 +125,12 @@ class SQLInjectionDetecor:
 
                 if prediction[0] == 1:
                     results.append(
-                        {"injection_dected": True, "field": field, "value": value}
+                        {"injection_detected": True, "field": field, "value": value}
                     )
 
                 elif prediction[0] == 0:
                     results.append(
-                        {"injection_dected": False, "field": field, "value": value}
+                        {"injection_detected": False, "field": field, "value": value}
                     )
 
         return results
