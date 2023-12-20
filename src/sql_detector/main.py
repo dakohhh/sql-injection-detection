@@ -13,13 +13,15 @@ from sklearn.ensemble import RandomForestClassifier
 class SQLInjectionDetecor:
     vector_mappings: typing.Dict[str, str] = mapping.VECTOR_MAAPPINGS
 
-    xgboost_model: XGBClassifier = joblib.load(
-        os.path.join(os.getcwd(), "sql_detector/models/model__xgboost.joblib")
-    )
+    xgboost_model: XGBClassifier = None
 
-    random_model: RandomForestClassifier = joblib.load(
-        os.path.join(os.getcwd(), "sql_detector/models/model__random_forest.joblib")
-    )
+    with open("./sql_injector_detector/models/model__xgboost.joblib", "rb") as __model:
+        xgboost_model: XGBClassifier = joblib.load(__model)
+
+    random_model: RandomForestClassifier = None
+
+    with open("./sql_injector_detector/models/model__random_forest.joblib", "rb") as __model:
+        random_model: RandomForestClassifier = joblib.load(__model)
 
     def __init__(self, model: str):
         models = ["random", "xgb"]
