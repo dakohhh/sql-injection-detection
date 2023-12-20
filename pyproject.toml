@@ -1,20 +1,16 @@
 [tool.poetry]
-name = "sql injection detection"
+name = "sql-injection-detection"
 version = "0.1.0"
-description = "Implementation of an ML model that can successfully detect malicious SQL injection commands"
-authors = ["Dakoh Wisdom <wiizzydreadmill@gmail.com>"]
-license = "MIT"
+description = "A Python Package for detecting SQL Injection using Machine Learning"
+authors = ["Wisdom Dakoh <wisdomdakoh@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.13"
-numpy = "^1.26.1"
+python = "^3.9"
+numpy = "^1.26.2"
 scikit-learn = "^1.3.2"
-jupyter = "^1.0.0"
-xgboost = "^2.0.1"
-matplotlib = "^3.8.1"
-pandas = "^2.1.2"
-bcrypt = "^4.0.1"
+xgboost = "^2.0.3"
+pandas = "^2.1.4"
 
 
 [build-system]
