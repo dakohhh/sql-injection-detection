@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sql-injection-detection"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python Package for detecting SQL Injection using Machine Learning"
 authors = ["Wisdom Dakoh <wisdomdakoh@gmail.com>"]
 readme = "README.md"
@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 numpy = "^1.26.2"
-scikit-learn = "^1.3.2"
+scikit-learn = "1.1.2"
 xgboost = "^2.0.3"
 pandas = "^2.1.4"
 jupyter = "^1.0.0"
