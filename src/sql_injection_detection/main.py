@@ -15,12 +15,12 @@ class SQLInjectionDetecor:
 
     xgboost_model: XGBClassifier = None
 
-    with open("./src/sql_injection_detector/models/model__xgboost.joblib", "rb") as __model:
+    with open("./src/sql_injection_detection/models/model__xgboost.joblib", "rb") as __model:
         xgboost_model: XGBClassifier = joblib.load(__model)
 
     random_model: RandomForestClassifier = None
 
-    with open("./src/sql_injection_detector/models/model__random_forest.joblib", "rb") as __model:
+    with open("./src/sql_injection_detection/models/model__random_forest.joblib", "rb") as __model:
         random_model: RandomForestClassifier = joblib.load(__model)
 
     def __init__(self, model: str):
@@ -112,11 +112,11 @@ class SQLInjectionDetecor:
     def map_mask(self, string_value:str):
         mask = []
 
-        for k, v in self.vector_mappings.items():
+        for key, value in self.vector_mappings.items():
 
-            if k.lower() in string_value.lower():
+            if key.lower() in str(string_value).lower():
 
-                mask.append(v)
+                mask.append(value)
 
         return mask
 
