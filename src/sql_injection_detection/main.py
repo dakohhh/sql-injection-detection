@@ -15,12 +15,12 @@ class SQLInjectionDetecor:
 
     xgboost_model: XGBClassifier = None
 
-    with open("./sql_injector_detector/models/model__xgboost.joblib", "rb") as __model:
+    with open("./src/sql_injection_detector/models/model__xgboost.joblib", "rb") as __model:
         xgboost_model: XGBClassifier = joblib.load(__model)
 
     random_model: RandomForestClassifier = None
 
-    with open("./sql_injector_detector/models/model__random_forest.joblib", "rb") as __model:
+    with open("./src/sql_injection_detector/models/model__random_forest.joblib", "rb") as __model:
         random_model: RandomForestClassifier = joblib.load(__model)
 
     def __init__(self, model: str):
